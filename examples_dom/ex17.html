@@ -18,7 +18,10 @@
       },
       "Фрукты": {
         "красные": {
-          "клубника": 2,
+          "клубника": {
+            "крупная": 3,
+            "мелкая": 5
+          },
           "малина": 4
         },
         "зеленые": {
@@ -28,6 +31,30 @@
       }
     }
 
+    function createUl(obj) {
+      if(!Object.keys(obj).length) return;
+      let ul = document.createElement('ul');
+      for(let key in obj) {
+        let li = document.createElement('li');
+        if(!isNaN(obj[key])) {
+          li.textContent = `${key} ${obj[key]}`;
+        } else {
+          li.textContent = key;
+        }
+        let childrenUI = createUl(obj[key]);
+        if(childrenUI) {
+          li.append(childrenUI);
+        }
+        ul.append(li);
+      }
+      return ul;
+    }
+
+    function createTree(container, obj) {
+      document.querySelector(container).append(createUl(obj))
+    }
+
+    createTree('body', data);
   </script>
 </body>
 </html>

@@ -13,7 +13,11 @@
   </div>
 
   <script>
-
+    let div = document.querySelector('div');
+    
+    let div2 = div.cloneNode(true);
+    div2.querySelector('p').textContent = "Еще одно сообщение"; 
+    div.after(div2);
   </script>
 </body>
 </html>
