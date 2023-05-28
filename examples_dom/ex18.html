@@ -12,9 +12,10 @@
   <div class="container"></div>
 
   <script>
+    // let container = document.querySelector('.container');
     function createCalendar(elem, year, month) {
       elem = document.querySelector(elem)
-
+      console.log(elem);
       let mon = month - 1;
       let d = new Date(year, mon);
 
@@ -35,7 +36,7 @@
 
       for(let i=0; i<getDay(d); i++) {
         table += '<td></td>';
-      }
+      };
 
       while(d.getMonth() == mon) {
         table += '<td>' + d.getDate() + '</td>';
@@ -44,7 +45,7 @@
           table +='</tr><tr>'
         }
         d.setDate(d.getDate()+1);
-      }
+      };
 
       if(getDay(d) != 0) {
         for(let i=getDay(d); i<7; i++) {
@@ -54,6 +55,7 @@
 
       table += '</tr></table>';
       elem.innerHTML = table;
+      elem.append(table);
     }
 
     function getDay(date) {
@@ -62,8 +64,9 @@
       return day - 1;
     }
 
-    for(let i=1; i<13; i++) {
-      createCalendar('.container',2022, i)
+    for(let i=1; i<= 12; i++) {
+      createCalendar('.container', 2022, i);
+      // идем потихоньку в верном направлении, дивы создад теперь надо в них поместить месяца как-то
     }
     // createCalendar('body', 2022, 4);
    </script>
