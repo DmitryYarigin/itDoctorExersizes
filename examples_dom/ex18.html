@@ -12,14 +12,17 @@
   <div class="container"></div>
 
   <script>
-    // let container = document.querySelector('.container');
-    function createCalendar(elem, year, month) {
-      elem = document.querySelector(elem)
-      console.log(elem);
-      let mon = month - 1;
-      let d = new Date(year, mon);
+    // основная функция
 
-      let table = `
+    function createCalendar(elem, year, month) {
+      elem = document.querySelector(elem);
+      console.log(typeof elem );
+
+      let mon = month - 1; // в js месяц начинается в нуля, например декабрь это 11й месяц
+      let d = new Date(year, mon) // передали в переменную дату (год и месяц)
+
+      // создадим таблицу html
+      let table = ` 
       <table>
         <caption>${month}.${year}</caption>
         <tr>
@@ -27,49 +30,49 @@
           <th>вт</th>
           <th>ср</th>
           <th>чт</th>
-          <th>пн</th>
+          <th>пт</th>
           <th>сб</th>
           <th>вс</th>
         </tr>
         <tr>
-      `; 
+      `
+      // в цикле создаем пустые ячейки
+      for(let i=0; i < getDay(d); i++) { 
+        table += `<td></td>`
+      }
 
-      for(let i=0; i<getDay(d); i++) {
-        table += '<td></td>';
-      };
-
+      // ниже генератор всех дней в цикле while
       while(d.getMonth() == mon) {
         table += '<td>' + d.getDate() + '</td>';
-        console.log('while');
-        if(getDay(d) % 7 == 6) {
-          table +='</tr><tr>'
+        if(getDay(d) % 7 == 6) { // если день воскресенье переходим на новую строку
+          table += '</tr><tr>'
         }
-        d.setDate(d.getDate()+1);
-      };
+        d.setDate(d.getDate() + 1);
+      }
 
+      // создаем оставшиеся пустые ячейки
       if(getDay(d) != 0) {
         for(let i=getDay(d); i<7; i++) {
           table += '<td></td>';
         }
       }
 
-      table += '</tr></table>';
-      elem.innerHTML = table;
-      elem.append(table);
+      table += `</tr></table>`; // после всех манипуляций добавляем осташиеся теги к таблице
+      elem.innerHTML += table; // в содержимое контейнера добавляем таблицу
+
     }
 
+    // функция возвращает день недели
     function getDay(date) {
       let day = date.getDay();
-      if(day == 0) day = 7;
-      return day - 1;
-    }
-
-    for(let i=1; i<= 12; i++) {
-      createCalendar('.container', 2022, i);
-      // идем потихоньку в верном направлении, дивы создад теперь надо в них поместить месяца как-то
-    }
-    // createCalendar('body', 2022, 4);
-   </script>
+      if(day == 0) day = 7; // если день 0 (воскресенье) то день равен 7
+      return day - 1; // чтобы как то точнее считать уменьшаем на 1
+    }  
+    
+    for(let i = 1; i < 13; i++)
+    createCalendar('.container', 2022, i);
+    console.log('.container');
+  </script>
 </body>
 
 </html>
